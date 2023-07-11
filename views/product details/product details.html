@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="product details.css">
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+	  <!-- Plugins CSS -->
+    <link rel="stylesheet" href="assets/css/plugins.css">
+    <!-- Bootstap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <title>product details</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="images/photo_2022-12-26_09-40-43.jpg" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav" dir="rtl" style="font-size: 20px;">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">الرئيسية <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#info">حول</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#help">التواصل</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align: right;">
+                        <a class="dropdown-item" href="#">إنشاء حساب</a>
+                        <a class="dropdown-item" href="#">تسجيل الدخول</a>
+                        <a class="dropdown-item" href="#">تسجيل الخروج</a>
+                    </div>
+                </li>
+
+            </ul>
+             <div class="icons d-flex" style=" padding: 20px; ">
+			<form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <div class="icon d-flex"><i class="bx bx-search"></i></div>
+				</form>
+                <div class="icon user-icon d-flex">
+                    <i class="bx bx-user"></i>
+                </div>
+               
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-6">
+
+                        <div class="preview-pic tab-content">
+                            <div class="tab-pane active" id="pic-1"><img src="images/c3.jpg" /></div>
+                            <div class="tab-pane" id="pic-2"><img src="images/c3.jpg" /></div>
+                            <div class="tab-pane" id="pic-3"><img src="images/c3.jpg" /></div>
+                            <div class="tab-pane" id="pic-4"><img src="images/c3.jpg" /></div>
+                            <div class="tab-pane" id="pic-5"><img src="images/c3.jpg" /></div>
+                        </div>
+                        <ul class="preview-thumbnail nav nav-tabs">
+                            <li class="active">
+                                <a data-target="#pic-1" data-toggle="tab"><img src="images/c2.jpg" /></a>
+                            </li>
+                            <li>
+                                <a data-target="#pic-2" data-toggle="tab"><img src="images/c1.jpg" /></a>
+                            </li>
+                            <li>
+                                <a data-target="#pic-3" data-toggle="tab"><img src="images/c4.jpg" /></a>
+                            </li>
+                            <li>
+                                <a data-target="#pic-4" data-toggle="tab"><img src="images/c2.jpg" /></a>
+                            </li>
+                            <li>
+                                <a data-target="#pic-5" data-toggle="tab"><img src="images/c4.jpg" /></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="details col-md-6" dir="rtl" Style="text-align:right; font-size:20px ">
+                        <h3 class="product-title" style="color: #0b3c80; text-align:right; font-size:25px ">كرسي طبيب أسنان</h3>
+                        <div class="rating">
+                            <div class="stars" style="margin-bottom: 20px; text-align:right;"">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
+                            <span class="review-no" Style="text-align:right; !important"> 41 مستخدم قيم هذا المنتج</span>
+                        </div>
+                        <p class="product-description">
+                            <ul style="list-style:none; font-size: 20px; text-align:right;">
+                                <li style="padding: 5px;"><span style="font-weight:bold; ">النوع:</span> كرسي أسنان</li>
+                                <li style="padding: 5px;"><span style="font-weight:bold; ">الشركة المصنعة:</span>ألمانيا</li>
+                                <li style="padding: 5px;"><span style="font-weight:bold; ">الكفالة:</span>لمدة سنة</li>
+                                <li style="padding: 5px;"><span style="font-weight:bold; ">الشركة المنتجة:</span>الجمال</li>
+                            </ul>
+                        </p>
+                        <h4 class="price" Style="text-align:right;"> السعر قبل العرض<span style="padding-right: 15px !important; text-decoration: line-through; color: rgba(255, 0, 0, 0.719);">$180</span></h4>
+                        <h4 class="price" Style="text-align:right;"> السعر الحالي<span style="padding-right: 15px !important;">$180</span></h4>
+
+
+                        <h5 class="sizes" Style="text-align:right;" >الأحجام
+                            <span class="size" data-toggle="tooltip" title="small">s</span>
+                            <span class="size" data-toggle="tooltip" title="medium">m</span>
+                            <span class="size" data-toggle="tooltip" title="large">l</span>
+                            <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+                        </h5>
+                        <h5 class="colors" Style="text-align:right;">الألوان
+                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                            <span class="color green"></span>
+                            <span class="color blue"></span>
+                        </h5>
+                        <div class="action" Style="text-align:right;">
+                            <button class="add-to-cart btn btn-default" type="button">إضافة للسلة</button>
+                            <button class="like btn btn-default" type="button"><span
+                                    class="fa fa-heart"></span></button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="footer">
+        <div class="container">
+            <div class="row text-center text-xs-center text-sm-left text-md-left">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>Quick links</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>Quick links</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>Quick links</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
+                        <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
+                        <li><a href="https://wwwe.sunlimetech.com" title="Design and developed by"><i
+                                    class="fa fa-angle-double-right"></i>Imprint</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
+                                    class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+                </hr>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <p><u><a href="https://www.nationaltransaction.com/">National Transaction Corporation</a></u> is a Registered MSP/ISO of Elavon, Inc. Georgia [a wholly owned subsidiary of U.S. Bancorp, Minneapolis, MN]</p>
+                    <p class="h6">&copy All right Reversed.<a class="text-green ml-2" href="https://www.sunlimetech.com" target="_blank">Sunlimetech</a></p>
+                </div>
+                </hr>
+            </div>
+        </div>
+    </section>
+
+
+<!-- Including Jquery -->
+    <script src="assets/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/vendor/jquery.cookie.js"></script>
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/wow.min.js"></script>
+    <!-- Including Javascript -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/lazysizes.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    
+</body>
+
+</html>
