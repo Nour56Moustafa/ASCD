@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const {UnauthenticatedError} = require('../errors')
 
@@ -17,7 +17,7 @@ const auth = async (req, res, next) => {
         // adding this {user} object in the request, because we will need it in
         // the next middleware to create a job by this user, and we need the id
         // for the reference
-        req.user = {userId: payload.userId, name: payload.name}
+        req.user = {userId: payload.userId, name: payload.name, role: payload.role}
         next()
     } catch (error) {
         throw new UnauthenticatedError('User Unauthenticated')

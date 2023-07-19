@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, match: /^\S+@\S+\.\S+$/ },
   password: { type: String, required: true },
   username: { type: String, required: true, maxlength: 40 },
+  role: { type: [{ type: String, enum: ['admin', 'user'] }], required: true, default: 'user' },
   region: { type: String, maxlength: 30 },
   title: { type: String, maxlength: 20 },
   favBlogs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }],
