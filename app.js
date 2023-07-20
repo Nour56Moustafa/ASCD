@@ -2,6 +2,7 @@ require('dotenv').config(); // enable using variables located in .env file
 
 // import external packages
 require('express-async-errors');
+const bodyParser = require('body-parser')
 const express = require('express');
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(rateLimiter({
 app.use(helmet())
 app.use(cors())
 app.use(xss())
+app.use(bodyParser.json())
 
 
 // routes

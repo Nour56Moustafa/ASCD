@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true, minlength: 3, maxlength: 20 },
-  lastName: { type: String, required: true, minlength: 3, maxlength: 20 },
+  firstName: { type: String, required: [true, 'Please provide first name'], minlength: 3, maxlength: 20 },
+  lastName: { type: String, required: [true, 'Please provide last name'], minlength: 3, maxlength: 20 },
   phoneNumber: { type: String, validate: /^\d{10}$/ },
-  email: { type: String, required: true, unique: true, match: /^\S+@\S+\.\S+$/ },
-  password: { type: String, required: true },
-  username: { type: String, required: true, maxlength: 40 },
-  role: { type: [{ type: String, enum: ['admin', 'user'] }], required: true, default: 'user' },
+  email: { type: String, required: [true, 'Please provide email'], unique: true, match: [
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    'Please provide a valid email',
+  ] },
+  password: { type: String, required: [true, 'Please provide password'], minlength: 8 },
+  username: { type: String, required: [true, 'Please provide username'], maxlength: 40 },
+  role: { type: String, enum: ['admin', 'user'], required: true, default: 'user' },
   region: { type: String, maxlength: 30 },
   title: { type: String, maxlength: 20 },
   favBlogs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }],
@@ -27,6 +31,15 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
+
+userSchema.methods.createJWT = function () {
+  return jwt.sign( {username: this.username} ,
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_LIFETIME,
+    }
+  )
+}
 
 const User = mongoose.model('User', userSchema);
 
