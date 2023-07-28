@@ -36,10 +36,10 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 // invoke security packages
-app.set('trust proxy', 1)    // if the app is behind a reverse proxy like heroku
+app.set('trust proxy', 1) // if the app is behind a reverse proxy like heroku
 app.use(rateLimiter({
-    windowMs: 15 * 60 * 1000,   // 15 minutes
-    max: 100,                   // limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
     message: 'too many requests, wait 15 minutes and try again'
 }))
 app.use(helmet())
@@ -49,7 +49,7 @@ app.use(bodyParser.json())
 
 
 // routes
-app.use('/api/v1/auth', authRouter)  // includes 'login' and 'register' in the router
+app.use('/api/v1/auth', authRouter) // includes 'login' and 'register' in the router
 app.use('/api/v1/products', productsRouter)
 app.use('/api/v1/companies', companiesRouter)
 app.use('/api/v1/blogs', blogsRouter)
@@ -66,15 +66,15 @@ app.use(errorHandlerMiddleware);
 
 // spin up the server
 const port = process.env.PORT || 3000;
-const start = async () => {
-  try {
-    await connectDB(process.env.MONGO_URI)
-    app.listen(port, () =>
-      console.log(`Server is listening on port ${port}...`)
-    );
-  } catch (error) {
-    console.log(error);
-  }
+const start = async() => {
+    try {
+        await connectDB(process.env.MONGO_URI)
+        app.listen(port, () =>
+            console.log(`Server is listening on port ${port}...`)
+        );
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 start();
