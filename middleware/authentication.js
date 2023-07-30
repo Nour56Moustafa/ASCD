@@ -21,6 +21,7 @@ const auth = async (req, res, next) => {
         // the next middleware, and we need the id
         next()
     } catch (error) {
+        console.log(error)
         throw new UnauthenticatedError('User Unauthenticated')
     }
 }
