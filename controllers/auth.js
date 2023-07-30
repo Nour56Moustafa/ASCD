@@ -32,7 +32,16 @@ const register = async (req, res) => {
         // Generate a JWT token for the user
         const token = newUser.createJWT();
         
-        res.status(StatusCodes.CREATED).json({ user: { firstName, lastName, email, username, phoneNumber }, token });
+        res
+            .status(StatusCodes.CREATED)
+            .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                maxAge: 8640000,
+                domain: `localhost`,
+                sameSite: 'lax',
+            })
+            .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
@@ -62,7 +71,16 @@ const login = async (req, res) => {
         const phoneNumber = user.phoneNumber
         // Generate a JWT token for the user
         const token = user.createJWT();
-        res.status(StatusCodes.OK).json({ user: { firstName, lastName, email, username, phoneNumber }, token });
+        res
+            .status(StatusCodes.OK)
+            .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                maxAge: 8640000,
+                domain: `localhost`,
+                sameSite: 'lax',
+            })
+            .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
     } catch (error) {
         console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
@@ -71,17 +89,8 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-        // Create an empty JWT token cookie with an expired date to clear it
-        const emptyTokenCookie = cookie.serialize('jwt', '', {
-            httpOnly: true,
-            expires: new Date(0),
-            sameSite: 'strict',
-        });
-
-        // Set the cookie in the response header to clear the client-side token
-        res.setHeader('Set-Cookie', emptyTokenCookie);
-
-        res.status(StatusCodes.OK).json({ message: 'Logout successful' });
+        // Clear the client-side token
+        res.status(StatusCodes.OK).clearCookie('token').json({ message: 'Logout successful' });
         } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
         }

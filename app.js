@@ -3,9 +3,11 @@ require('dotenv').config(); // enable using variables located in .env file
 // import external packages
 require('express-async-errors');
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const express = require('express');
 const app = express();
 
+app.use(cookieParser())
 
 // extra security packages
 const helmet = require('helmet');
