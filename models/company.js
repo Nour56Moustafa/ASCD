@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const companySchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3, maxlength: 50 },
+  notApproved: {type: Boolean, default: false},
   origin: { type: String, required: true },
   branches: { type: [String], required: true, minlength: 1 },
   accounts: { type: [String], required: true, minlength: 1 },

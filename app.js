@@ -50,11 +50,11 @@ app.use(bodyParser.json())
 
 // routes
 app.use('/api/v1/auth', authRouter)  // includes 'login' and 'register' in the router
-app.use('/api/v1/products', productsRouter)
+app.use('/api/v1/products',authenticateUser , productsRouter)
 app.use('/api/v1/companies', companiesRouter)
 app.use('/api/v1/blogs', blogsRouter)
-app.use('/api/v1/comments', commentsRouter)
-app.use('/api/v1/events', eventsRouter)
+app.use('/api/v1/comments',authenticateUser , commentsRouter)
+app.use('/api/v1/events',authenticateUser, eventsRouter)
 app.use('/api/v1/messages', messagesRouter)
 app.use('/api/v1/sponsors', sponsoresRouter)
 app.use('/api/v1/users', usersRouter)

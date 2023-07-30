@@ -1,13 +1,23 @@
-const express = require('express')
-const router = express.Router()
-
+const express = require('express');
+const router = express.Router();
+const authenticateUser = require('../middleware/authentication');
 const {
-    searchUser,
-    updateUser,
-    deleteUser
-} = require('../controllers/users')
+  searchUser,
+  updateUserProfile,
+  deleteUser,
+  getUserProfile,
+} = require('../controllers/users');
 
-router.route('/').get(searchUser)
-router.route('/:id').delete(deleteUser).patch(updateUser)
+// Search users route (No authentication required)
+router.get('/search', searchUser);
 
-module.exports = router
+// Routes requiring authentication
+router.use(authenticateUser); // Use the middleware for all routes below
+
+// Protected routes
+router.route('/')
+  .get(getUserProfile)   // Requires authentication
+  .delete(deleteUser)   // Requires authentication
+  .patch(updateUserProfile);   // Requires authentication
+
+module.exports = router;

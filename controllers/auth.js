@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const { StatusCodes } = require('http-status-codes');
+const cookie = require('cookie');
+
 
 const register = async (req, res) => {
     try {
@@ -8,7 +10,7 @@ const register = async (req, res) => {
         //Check if the email is already registered
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-                return res.status(StatusCodes.CONFLICT).json({ error: 'Email already exists' });
+            return res.status(StatusCodes.CONFLICT).json({ error: 'Email already exists' });
         }
 
         // Check if the username is already taken
@@ -67,4 +69,22 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+  try {
+        // Create an empty JWT token cookie with an expired date to clear it
+        const emptyTokenCookie = cookie.serialize('jwt', '', {
+            httpOnly: true,
+            expires: new Date(0),
+            sameSite: 'strict',
+        });
+
+        // Set the cookie in the response header to clear the client-side token
+        res.setHeader('Set-Cookie', emptyTokenCookie);
+
+        res.status(StatusCodes.OK).json({ message: 'Logout successful' });
+        } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
+        }
+};
+
+module.exports = { register, login, logout };

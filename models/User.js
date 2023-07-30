@@ -33,7 +33,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 userSchema.methods.createJWT = function () {
-  return jwt.sign( {username: this.username} ,
+  return jwt.sign( {username: this.username, id: this.id} ,
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_LIFETIME,
