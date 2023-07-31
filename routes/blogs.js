@@ -7,11 +7,22 @@ const {
     getAllBlogs,
     getBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    manageLikes,
+    getLikedBlogs,
 } = require('../controllers/blogs')
 
-router.route('/:id').get(getBlog).delete(authenticateUser, deleteBlog).patch(authenticateUser, updateBlog)
-router.route('/').post(authenticateUser, createBlog).get(getAllBlogs)
+router.route('/')
+    .post(authenticateUser, createBlog)
+    .get(getAllBlogs)
+router.route('/liked')
+    .get(authenticateUser, getLikedBlogs)
+router.route('/:id')
+    .get(getBlog)
+    .delete(authenticateUser, deleteBlog)
+    .patch(authenticateUser, updateBlog)
+    .post(authenticateUser, manageLikes)
+
 
 module.exports = router
 

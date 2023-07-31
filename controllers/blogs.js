@@ -1,9 +1,11 @@
 const {StatusCodes} = require('http-status-codes')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const { ObjectId } = require('mongoose').Types;
 const {BadRequestError, NotFoundError} = require('../errors')
 const fs = require('fs')
 const path = require('path');
+const { model } = require('mongoose');
 
 const createBlog = async (req, res) => {
     try {
@@ -170,10 +172,89 @@ const deleteBlog = async (req, res) => {
     }
 }
 
+const manageLikes = async (req, res) => {
+    try {
+        const blogId = req.params.id;
+
+        // Check if the provided ID is a valid ObjectId
+        if (!ObjectId.isValid(blogId)) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid blog ID' });
+        }
+
+        // Find the blog by ID in the database
+        const blog = await Blog.findById(blogId);
+
+        // If the blog is not found, return a 404 not found error
+        if (!blog) {
+            return res.status(StatusCodes.NOT_FOUND).json({ error: 'Blog not found' });
+        }
+
+        // Check if the user ID from the token (req.user.id) is in the likes array of the User model
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Log in and try again' });
+        }
+
+        if (user.likes.includes(blogId)) {
+            // Remove the blog's ID from the 'likes' array in the User model
+            const blogIndex = user.likes.indexOf(blogId);
+            user.likes.splice(blogIndex, 1);
+            await user.save();
+            
+            // Decrement likes count field in the Blog model by one
+            blog.likesCount = blog.likesCount - 1
+            await blog.save();
+            res.status(StatusCodes.OK).json({ message: 'Blog unliked successfully' });
+        }else{
+            // Add the blog's ID to the 'likes' array in the User model
+            user.likes.push(blogId);
+            await user.save();
+
+            // Increment likes count field in the Blog model by one
+            blog.likesCount = blog.likesCount + 1
+            await blog.save();
+
+            res.status(StatusCodes.OK).json({ message: 'Blog liked successfully' });
+        }
+
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong.' });
+    }
+}
+
+const getLikedBlogs = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        // If the user is not found, return an error
+        if (!user) {
+            return res.status(StatusCodes.NOT_FOUND).json({ error: 'User not found' });
+        }
+
+        // Get the liked blogs IDs from the user
+        const likedBlogIds = user.likes;
+
+        // Find the liked blogs based on the likedBlogIds array
+        const likedBlogs = await Blog.find({ _id: { $in: likedBlogIds } });
+
+        // Return the liked blogs array
+        res.status(StatusCodes.OK).json({ likedBlogs });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
+    }
+}
+
 module.exports = {
     createBlog,
     getAllBlogs,
     getBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    manageLikes,
+    getLikedBlogs,
 }
