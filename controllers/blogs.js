@@ -5,7 +5,6 @@ const { ObjectId } = require('mongoose').Types;
 const {BadRequestError, NotFoundError} = require('../errors')
 const fs = require('fs')
 const path = require('path');
-const { model } = require('mongoose');
 
 const createBlog = async (req, res) => {
     try {
@@ -36,7 +35,6 @@ const createBlog = async (req, res) => {
         });
         res.status(StatusCodes.CREATED).json({ blog: newBlog });
     } catch (error) {
-        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 }
