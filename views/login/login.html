@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <script src="backend.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>LogIn</title>
 </head>
 
@@ -19,7 +21,7 @@
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-sm-4 col-md-4 col-lg-6 col-xl-5">
                     <img src="images/photo_2022-12-26_09-40-43.jpg" class="img-fluid" alt="Sample image">
-					
+
                 </div>
                 <div class="col-sm-4 col-md-4 col-lg-6 col-xl-4 offset-xl-1">
                     <form>
@@ -46,13 +48,13 @@
 
                         <!-- Email input -->
                         <div class="form-outline mb-4" style="padding-bottom:20px">
-                            <input type="email" id="form3Example3" class="form-control form-control-lg" placeholder="البريد الإلكتروني" style=" border: none;
+                            <input type="email" id="email" class="form-control form-control-lg" placeholder="البريد الإلكتروني" style=" border: none;
                             border-bottom: 1px solid #346bba;  overflow: hidden; background: transparent;" dir="rtl" />
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" id="form3Example4" class="form-control form-control-lg" placeholder="كلمة المرور" style=" border: none;
+                            <input type="password" id="password" class="form-control form-control-lg" placeholder="كلمة المرور" style=" border: none;
                             border-bottom: 1px solid #346bba;  overflow: hidden; background: transparent;" dir="rtl" />
                         </div>
 
@@ -68,7 +70,7 @@
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">تسجيل الدخول</button>
+                            <a href="../main/main.html" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem; " id="submit">تسجيل الدخول</a>
                             <p class="small fw-bold mt-2 pt-1 mb-0">لا تملك حساب؟ <a href="#!" class="link-danger">قم
                                     بالتسجيل</a></p>
                         </div>

@@ -14,11 +14,13 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+    <script src="backend.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <title>register</title>
 </head>
 
-<body>
+<body id="register">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#"><img src="images/photo_2022-12-26_09-40-43.jpg" alt=""></a>
@@ -28,13 +30,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav" dir="rtl" style="font-size: 20px;">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#home">الرئيسية <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../main/main.html">الرئيسية <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#info">حول</a>
+                    <a class="nav-link" href="../main/main.html">حول</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#help">التواصل</a>
+                    <a class="nav-link" href="../main/main.html">التواصل</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -43,8 +45,8 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align: right;">
-                        <a class="dropdown-item" href="#">إنشاء حساب</a>
-                        <a class="dropdown-item" href="#">تسجيل الدخول</a>
+                        <a class="dropdown-item" href="#register">إنشاء حساب</a>
+                        <a class="dropdown-item" href="../login/login.html">تسجيل الدخول</a>
                         <a class="dropdown-item" href="#">تسجيل الخروج</a>
                     </div>
                 </li>
@@ -56,7 +58,8 @@
                     <div class="icon d-flex"><i class="bx bx-search"></i></div>
                 </form>
                 <div class="icon user-icon d-flex">
-                    <i class="bx bx-user"></i>
+                    <a href="../user profile/user profile.html">
+                        <i class="bx bx-user"></i></a>
                 </div>
 
             </div>
@@ -73,44 +76,44 @@
                     <div class="registration-box">
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>الاسم الثاني</label>
-                            <input type="text" placeholder="أدخل اسمك الثاني" class="input-field">
+                            <input type="text" placeholder="أدخل اسمك الثاني" class="input-field" id="lastName">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>الاسم الأول</label>
-                            <input type="text" placeholder="أدخل اسمك الأول" class="input-field">
+                            <input type="text" placeholder="أدخل اسمك الأول" class="input-field" id="firstName">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>تأكيد الايميل</label>
-                            <input type="email" placeholder="قم بتأكيد ايميلك" class="input-field">
+                            <input type="email" placeholder="قم بتأكيد ايميلك" class="input-field" id="co-email">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>الايميل</label>
-                            <input type="email" placeholder="أدخل بريدك الالكتروني" class="input-field">
+                            <input type="email" placeholder="أدخل بريدك الالكتروني" class="input-field" id="email">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>تأكيد كلمة السر</label>
-                            <input type="password" placeholder="قم بتأكيد كلمة السر" class="input-field">
+                            <input type="password" placeholder="قم بتأكيد كلمة السر" class="input-field" id="co-password">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>كلمة السر</label>
-                            <input type="password" placeholder="أدخل كلمة السر" class="input-field">
+                            <input type="password" placeholder="أدخل كلمة السر" class="input-field" id="password">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>اسم المستخدم</label>
-                            <input type="text" placeholder="أدخل اسم المستخدم" class="input-field">
+                            <input type="text" placeholder="أدخل اسم المستخدم" class="input-field" id="username">
                         </div>
                         <div class="input-box" dir="rtl" style="text-align:right;">
                             <label>رقم التواصل</label>
-                            <input type="number" placeholder="أدخل رقم التواصل" class="input-field">
+                            <input type="number" placeholder="أدخل رقم التواصل" class="input-field" id="phoneNumber">
                         </div>
 
                     </div>
-                    <button class="btn-register">سجل الآن</button>
-                    <button class="btn-register"> التسجيل كشركة</button>
+                    <a href="../main/main.html" class="btn-register" id="btn-register"> سجل الآن</a>
+                    <a href="../register/company register.html" class="btn-register">  التسجيل كشركة</a>
                 </form>
             </div>
             <div class="registration-footer">
-                <h3>هل لديك حساب مسبقاً؟ <a href="#"> قم بتسجيل الدخول</a></h3>
+                <h3>هل لديك حساب مسبقاً؟ <a href="../login/login.html"> قم بتسجيل الدخول</a></h3>
             </div>
         </div>
     </section>
@@ -190,5 +193,7 @@
     <script src="assets/js/lazysizes.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
+</html>
 
 </html>

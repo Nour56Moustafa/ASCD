@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="product details.css">
+    <link rel="stylesheet" href="product details.css">
     <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
-	  <!-- Plugins CSS -->
+    <!-- Plugins CSS -->
     <link rel="stylesheet" href="assets/css/plugins.css">
     <!-- Bootstap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -28,13 +28,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav" dir="rtl" style="font-size: 20px;">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#home">الرئيسية <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../main/main.html">الرئيسية <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#info">حول</a>
+                    <a class="nav-link" href="../main/main.html">حول</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#help">التواصل</a>
+                    <a class="nav-link" href="../main/main.html">التواصل</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -43,22 +43,24 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="text-align: right;">
-                        <a class="dropdown-item" href="#">إنشاء حساب</a>
-                        <a class="dropdown-item" href="#">تسجيل الدخول</a>
+                        <a class="dropdown-item" href="../register/register.html">إنشاء حساب</a>
+                        <a class="dropdown-item" href="../login/login.html">تسجيل الدخول</a>
+
                         <a class="dropdown-item" href="#">تسجيل الخروج</a>
                     </div>
                 </li>
 
             </ul>
-             <div class="icons d-flex" style=" padding: 20px; ">
-			<form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <div class="icon d-flex"><i class="bx bx-search"></i></div>
-				</form>
+            <div class="icons d-flex" style=" padding: 20px; ">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <div class="icon d-flex"><i class="bx bx-search"></i></div>
+                </form>
                 <div class="icon user-icon d-flex">
-                    <i class="bx bx-user"></i>
+                    <a href="../user profile/user profile.html">
+                        <i class="bx bx-user"></i></a>
                 </div>
-               
+
             </div>
         </div>
     </nav>
@@ -94,17 +96,17 @@
                         </ul>
 
                     </div>
-                    <div class="details col-md-6" dir="rtl" Style="text-align:right; font-size:20px ">
+                    <div class="details col-md-6" dir="rtl" Style="text-align:right; font-size:20px ;">
                         <h3 class="product-title" style="color: #0b3c80; text-align:right; font-size:25px ">كرسي طبيب أسنان</h3>
                         <div class="rating">
-                            <div class="stars" style="margin-bottom: 20px; text-align:right;"">
+                            <div class="stars" style="margin-bottom: 20px; text-align:right;">
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star"></span>
                                 <span class="fa fa-star"></span>
                             </div>
-                            <span class="review-no" Style="text-align:right; !important"> 41 مستخدم قيم هذا المنتج</span>
+                            <span class="review-no" Style="text-align:right; "> 41 مستخدم قيم هذا المنتج</span>
                         </div>
                         <p class="product-description">
                             <ul style="list-style:none; font-size: 20px; text-align:right;">
@@ -118,7 +120,7 @@
                         <h4 class="price" Style="text-align:right;"> السعر الحالي<span style="padding-right: 15px !important;">$180</span></h4>
 
 
-                        <h5 class="sizes" Style="text-align:right;" >الأحجام
+                        <h5 class="sizes" Style="text-align:right;">الأحجام
                             <span class="size" data-toggle="tooltip" title="small">s</span>
                             <span class="size" data-toggle="tooltip" title="medium">m</span>
                             <span class="size" data-toggle="tooltip" title="large">l</span>
@@ -130,9 +132,9 @@
                             <span class="color blue"></span>
                         </h5>
                         <div class="action" Style="text-align:right;">
-                            <button class="add-to-cart btn btn-default" type="button">إضافة للسلة</button>
-                            <button class="like btn btn-default" type="button"><span
-                                    class="fa fa-heart"></span></button>
+                            <a href="../add to cart/cart.html" class="add-to-cart btn btn-default"> إضافة للسلة</a>
+                            <a href="../wishlist/wishlist.html" class="like btn btn-default">
+                                <span class="fa fa-heart"></span></a>
 
                         </div>
                     </div>
@@ -203,7 +205,7 @@
     </section>
 
 
-<!-- Including Jquery -->
+    <!-- Including Jquery -->
     <script src="assets/js/vendor/jquery-3.3.1.min.js"></script>
     <script src="assets/js/vendor/jquery.cookie.js"></script>
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
@@ -215,7 +217,11 @@
     <script src="assets/js/lazysizes.js"></script>
     <script src="assets/js/main.js"></script>
 
-    
+
 </body>
+
+</html>
+
+</html>
 
 </html>
