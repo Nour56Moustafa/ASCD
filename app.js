@@ -26,21 +26,21 @@ const storage = multer.diskStorage({
 // File filter function to accept only image files
 const fileFilter = function (req, file, cb) {
     if (file.mimetype.startsWith('image/')) {
-      // Accept image files
-      cb(null, true);
+        // Accept image files
+        cb(null, true);
     } else {
-      // Reject non-image files
-      cb(new Error('Only image files are allowed!'), false);
+        // Reject non-image files
+        cb(new Error('Only image files are allowed!'), false);
     }
   };
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-      fileSize: 2048 * 2048, // 2 MB
+      fileSize: 1024 * 1024 * 5, // 5 MB
     },
 });
-app.use(upload.single('image'))
+app.use(upload.array('images', 2))
 
 
 

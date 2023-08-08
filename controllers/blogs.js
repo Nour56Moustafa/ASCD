@@ -9,8 +9,13 @@ const path = require('path');
 const createBlog = async (req, res) => {
     try {
         const { title, content, tags } = req.body;
-        const uploadedImage = req.file;
+        const uploadedImage = req.files[0];
         const authorID = req.user.id; // from the authentication middleware
+        
+        // limit the image size up to 5 MB
+        if(uploadedImage.size > 5242880){
+            res.status(StatusCodes.BAD_REQUEST).json({ error: 'File is too large to be uploaded, choose another file and try again' });
+        }
 
         // Process and save the image to the local storage
         const imageFolder = path.join(__dirname, '../public/images');
@@ -29,7 +34,7 @@ const createBlog = async (req, res) => {
         const newBlog = await Blog.create({
             title,
             content,
-            tags: [tags],
+            tags: tags.split(',').map(tag => tag.trim()),
             imgUrl: imagePath, // Save the image's absolute path and filename in the database
             authorID,
         });
@@ -74,7 +79,12 @@ const updateBlog = async (req, res) => {
     try {
         const { id } = req.params;
         const { title, content, tags } = req.body;
-        const image = req.file;
+        const image = req.files[0];
+
+        // limit the image size up to 5 MB
+        if(image.size > 5242880){
+            res.status(StatusCodes.BAD_REQUEST).json({ error: 'File is too large to be uploaded, choose another file and try again' });
+        }
     
         // Check if the provided ID is a valid ObjectId
         if (!ObjectId.isValid(id)) {
@@ -97,13 +107,13 @@ const updateBlog = async (req, res) => {
         // Update the blog fields
         blog.title = title || blog.title;
         blog.content = content || blog.content;
-        blog.tags = [tags];
+        blog.tags = tags.split(',').map(tag => tag.trim()) || blog.tags;
     
-        // delete old blog image for memory saving
-        fs.unlinkSync(blog.imgUrl); // Delete the image file synchronously
-
         // Update the image if provided
         if (image) {
+            // delete old blog image for memory saving
+            fs.unlinkSync(blog.imgUrl); // Delete the image file synchronously
+
             // Process and save the image to the local storage
             const imageFolder = path.join(__dirname, '../public/images');
             await fs.mkdir(imageFolder, { recursive: true }, cb => {}); // Create the 'images' folder if it doesn't exist
@@ -129,7 +139,6 @@ const updateBlog = async (req, res) => {
     
         res.status(StatusCodes.OK).json({ blog });
     } catch (error) {
-        // console.error('Error updating blog:', error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong.' });
     }
 }
