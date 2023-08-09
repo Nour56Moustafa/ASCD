@@ -56,7 +56,7 @@ const updateUserProfile = async (req, res) => {
   
       if (!user) {
         return res.status(StatusCodes.NOT_FOUND).json({ error: 'User not found' });
-      }
+    }
 
       // Update the user's profile data
       user.firstName = firstName;

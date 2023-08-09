@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const sponsorSchema = new mongoose.Schema({
-    type: { type: String, enum: ['golden', 'Silver', 'Diamond'] },
+    type: { type: String, required: true, enum: ['golden', 'silver', 'diamond'] },
     companyID: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Company' },
 });
 
