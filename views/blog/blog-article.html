@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+    <script src="../api/blogs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 
@@ -88,12 +90,12 @@
                     <!--Main Content-->
                     <div class="col-12 col-sm-12 col-md-9 col-lg-9 main-col">
                         <div class="blog--list-view">
-                            <div class="article" dir="rtl" style="text-align: right; font-size: 18px; ">
+                            <div class="article" dir="rtl" style="text-align: right; font-size: 18px; " data-blog-id="64d232291ca296141cd6684c">
                                 <!-- Article Image -->
-                                <a class="article_featured-image" href="#"><img class="blur-up lazyload" data-src="images/2.jpg" src="images/2.jpg" alt=""></a>
-                                <h1 style="padding-right: 20px;"><a href="blog-left-sidebar.html">ما أهمية الملتقيات العلمية السنوية</a></h1>
+                                <a class="article_featured-image" id="imageContainer" href="#"></a>
+                                <h1 style="padding-right: 20px;"><a href="" id="title">ما أهمية الملتقيات العلمية السنوية</a></h1>
                                 <ul class="publish-detail" style="padding-right: 20px;">
-                                    <li><i class="anm anm-user-al" aria-hidden="true"></i> مستخدم</li>
+                                    <li id="author"><i class="anm anm-user-al" aria-hidden="true"></i> مستخدم</li>
                                     <li><i class="icon anm anm-clock-r"></i> <time datetime="2017-05-02">02/5/2023</time> </li>
                                     <li>
                                         <ul class="inline-list">
@@ -101,7 +103,7 @@
                                         </ul>
                                     </li>
                                 </ul>
-                                <div class="rte" style="padding-right: 20px;">
+                                <div class="rte" style="padding-right: 20px;" id="content">
                                     <p>تقيم نقابة أطباء الأسنان الملتقى العلمي الثاني بكلية طب الإسنان بجامعة حلب اليوم الخميس تحت شعار " رفع الأداء وتعزيز التواصل " .</p>
                                     <p>ويستهدف الملتقى أكثر من 500 من أعضاء النقابة في أمانة العاصمة لرفع كفاءتهم المهنية، ومواكبة المستجدات العلمية في هذا المجال في إطار برنامج علمي وضعته النقابة لهذا العام يستهدف رفع كفاءة طبيب الأسنان العلمية والمهنية.
                                         وسيشهد الملتقى العلمي الثاني عرضاُ لأحدث المستجدات والتطورات في تشخيص وعلاج أمراض الأسنان والتعرف على احدث التقنيات العلمية في هذا المجال .</p>
@@ -184,7 +186,7 @@
                                 </div>
                                 <div class="widget-content">
                                     <div class="list list-sidebar-products">
-                                        <div class="grid">
+                                        <div class="grid" id="tags">
                                             <div class="grid__item">
                                                 <div class="mini-list-item">
                                                     <div class="mini-view_image">
