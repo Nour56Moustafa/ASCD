@@ -10,16 +10,18 @@ const auth = async (req, res, next) => {
     const token = authHeader.split(' ')[1]
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET) // decode the token with the JWT_SECRET used to sign it
+        const user = await User.findById(payload.id).select('-password')
         
-        // const user = User.findById(payload.id).select('-password')
-        // req.user = user
+        if (!user) {
+            throw new UnauthenticatedError('User not found');
+        }
+        req.user = user
 
         // adding this {user} object in the request, because we will need it in
-        // the next middleware to create a job by this user, and we need the id
-        // for the reference
-        req.user = {userId: payload.userId, name: payload.name, role: payload.role}
+        // the next middleware, and we need the id
         next()
     } catch (error) {
+        console.log(error)
         throw new UnauthenticatedError('User Unauthenticated')
     }
 }

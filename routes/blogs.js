@@ -1,4 +1,5 @@
 const express = require('express')
+const authenticateUser = require('../middleware/authentication')
 const router = express.Router()
 
 const {
@@ -6,11 +7,22 @@ const {
     getAllBlogs,
     getBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    manageLikes,
+    getLikedBlogs,
 } = require('../controllers/blogs')
 
-router.route('/').post(createBlog).get(getAllBlogs)
-router.route('/:id').get(getBlog).delete(deleteBlog).patch(updateBlog)
+router.route('/')
+    .post(authenticateUser, createBlog)
+    .get(getAllBlogs)
+router.route('/liked')
+    .get(authenticateUser, getLikedBlogs)
+router.route('/:id')
+    .get(getBlog)
+    .delete(authenticateUser, deleteBlog)
+    .patch(authenticateUser, updateBlog)
+    .post(authenticateUser, manageLikes)
+
 
 module.exports = router
 

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const isAdmin = require('../middleware/is-admin')
 
 const {
     createMessage,
@@ -8,7 +9,9 @@ const {
     deleteMessage
 } = require('../controllers/messages')
 
-router.route('/').post(createMessage).get(getAllMessages).delete(deleteAllMessages)
-router.route('/:id').delete(deleteMessage)
+router.route('/').post(createMessage)
+router.use(isAdmin)
+router.route('/').get(getAllMessages).delete(deleteAllMessages)
+router.route('/:messageId').delete(deleteMessage)
 
 module.exports = router

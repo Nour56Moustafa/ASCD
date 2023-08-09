@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const { StatusCodes } = require('http-status-codes');
+const cookie = require('cookie');
+
 
 const register = async(req, res) => {
     try {
@@ -30,7 +32,16 @@ const register = async(req, res) => {
         // Generate a JWT token for the user
         const token = newUser.createJWT();
 
-        res.status(StatusCodes.CREATED).json({ user: { firstName, lastName, email, username, phoneNumber }, token });
+        res
+            .status(StatusCodes.CREATED)
+            .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                maxAge: 8640000,
+                domain: `localhost`,
+                sameSite: 'lax',
+            })
+            .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
@@ -61,11 +72,28 @@ const login = async(req, res) => {
         const phoneNumber = user.phoneNumber
             // Generate a JWT token for the user
         const token = user.createJWT();
-        res.status(StatusCodes.OK).json({ user: { firstName, lastName, email, username, phoneNumber }, token });
+        res
+            .status(StatusCodes.OK)
+            .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                maxAge: 8640000,
+                domain: `localhost`,
+                sameSite: 'lax',
+            })
+            .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
     } catch (error) {
-        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 };
 
-module.exports = { register, login };
+const logout = async(req, res) => {
+    try {
+        // Clear the client-side token
+        res.status(StatusCodes.OK).clearCookie('token').json({ message: 'Logout successful' });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
+    }
+};
+
+module.exports = { register, login, logout };
