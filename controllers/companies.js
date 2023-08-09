@@ -2,16 +2,23 @@ const {StatusCodes} = require('http-status-codes')
 const Company = require('../models/company')
 const {BadRequestError, NotFoundError} = require('../errors')
 const { ObjectId } = require('mongoose').Types;
+const cookie = require('cookie');
 const fs = require('fs')
 const path = require('path');
 
 const createCompany = async (req, res) => {
     try {
-        const { name, origin, branches, accounts, desc } = req.body;
+        const { email, password, name, origin, branches, accounts, desc } = req.body;
 
         // Process uploaded images using Multer
         const profileImg = req.files[0];
         const companyImg = req.files[1];
+
+        //Check if the email is already registered
+        const existingCompany = await Company.findOne({ email });
+        if (existingCompany) {
+            return res.status(StatusCodes.CONFLICT).json({ error: 'Email already exists' });
+        }
 
         // limit the image size up to 5 MB
         if(profileImg.size > 5242880 || companyImg.size > 5242880){
@@ -41,6 +48,8 @@ const createCompany = async (req, res) => {
         }); // Move the uploaded file to the 'images' folder with the unique filename
 
         const newCompany = await Company.create({
+            email,
+            password,
             name,
             origin,
             branches: branches.split(',').map(branch => branch.trim()), // Convert comma-separated string to an array
@@ -50,8 +59,21 @@ const createCompany = async (req, res) => {
             companyImgUrl: companyImgPath,
         });
 
-        res.status(StatusCodes.CREATED).json({ message: 'Company created successfully', company: newCompany });
+        // Generate a JWT token for the user
+        const token = newCompany.createJWT();
+        
+        res
+            .status(StatusCodes.CREATED)
+            .cookie('token', token, {
+                secure: true,
+                httpOnly: true,
+                maxAge: 8640000,
+                domain: `localhost`,
+                sameSite: 'lax',
+            })
+            .json({ message: 'Company created successfully', company: newCompany, token });
     } catch (error) {
+        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 };
@@ -59,7 +81,7 @@ const createCompany = async (req, res) => {
 const getAllCompanies = async (req, res) => {
     try {
         // Get approved companies
-        const approvedCompanies = await Company.find({ approved: true });
+        const approvedCompanies = await Company.find({ approved: false });
 
         res.status(StatusCodes.OK).json({ companies: approvedCompanies });
     } catch (error) {
@@ -91,28 +113,30 @@ const getCompany = async (req, res) => {
 
 const updateCompany = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { name, origin, branches, accounts, desc } = req.body;
+        // Access the company's ID from the authentication token (it is set in the req.company field by the authenticateUser middleware)
+        const id = req.company.id;
 
+        const { name, origin, branches, accounts, desc } = req.body;
+        
         // Process uploaded images using Multer
         const profileImg = req.files[0];
         const companyImg = req.files[1];
-
-        // limit the image size up to 5 MB
-        if(profileImg.size > 5242880 || companyImg.size > 5242880){
-            res.status(StatusCodes.BAD_REQUEST).json({ error: 'Both files are/one file is too large to be uploaded, choose another file and try again' });
-        }
     
         // Check if the provided ID is a valid ObjectId
         if (!ObjectId.isValid(id)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid company ID' });
         }
 
-        // Find the blog by ID in the database
+        // Find the company in the database by its ID
         const company = await Company.findById(id);
-    
+  
         if (!company) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Company not found' });
+        }
+
+        // limit the image size up to 5 MB
+        if(profileImg.size > 5242880 || companyImg.size > 5242880){
+            res.status(StatusCodes.BAD_REQUEST).json({ error: 'Both files are/one file is too large to be uploaded, choose another file and try again' });
         }
     
         // Update the company fields
@@ -171,15 +195,15 @@ const updateCompany = async (req, res) => {
     
         res.status(StatusCodes.OK).json({ company });
     } catch (error) {
-        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong.' });
     }
 }
 
 const deleteCompany = async (req, res) => {
     try {
-        const { id } = req.params
-
+        // Access the company's ID from the authentication token (it is set in the req.company field by the authenticateUser middleware)
+        const id = req.company.id;
+        
         // Check if the provided ID is a valid ObjectId
         if (!ObjectId.isValid(id)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid company ID' });

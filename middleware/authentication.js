@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Company = require('../models/company')
 const jwt = require('jsonwebtoken')
 const {UnauthenticatedError} = require('../errors')
 
@@ -13,15 +14,20 @@ const auth = async (req, res, next) => {
         const user = await User.findById(payload.id).select('-password')
         
         if (!user) {
-            throw new UnauthenticatedError('User not found');
+            const company = await Company.findById(payload.id).select('-password')
+            if (!company){
+                throw new UnauthenticatedError('account not found');
+            }
+            req.company = company
         }
-        req.user = user
+        else{
+            req.user = user
+        }
 
         // adding this {user} object in the request, because we will need it in
         // the next middleware, and we need the id
         next()
     } catch (error) {
-        console.log(error)
         throw new UnauthenticatedError('User Unauthenticated')
     }
 }

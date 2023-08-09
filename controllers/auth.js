@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Company = require('../models/company');
 const { StatusCodes } = require('http-status-codes');
 const cookie = require('cookie');
 
@@ -54,24 +55,31 @@ const login = async (req, res) => {
         if (!email || !password) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Email and password required' });
         }
-        // Check if the email exists in the database
+        // Check if the email exists in user model
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid credentials' });
-        }
+            // Check if the email exists in company model
+            const company = await Company.findOne({ email });
+            if (!company){
+                return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid credentials' });
+            }
+            // Compare the provided password with the hashed password in the database
+            const isPasswordCorrect = await company.comparePassword(password);
+            if (!isPasswordCorrect) {
+                return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid credentials' });
+            }
+            const name = company.name
+            const origin = company.origin
+            const branches = company.branches
+            const accounts = company.accounts
+            const desc = company.desc
+            const profileImgUrl = company.profileImgUrl
+            const companyImgUrl = company.companyImgUrl
 
-        // Compare the provided password with the hashed password in the database
-        const isPasswordCorrect = await user.comparePassword(password);
-        if (!isPasswordCorrect) {
-            return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid credentials' });
-        }
-        const firstName = user.firstName
-        const lastName = user.lastName
-        const username = user.username
-        const phoneNumber = user.phoneNumber
-        // Generate a JWT token for the user
-        const token = user.createJWT();
-        res
+            // Generate a JWT token for the user
+            const token = company.createJWT();
+
+            res
             .status(StatusCodes.OK)
             .cookie('token', token, {
                 secure: true,
@@ -80,7 +88,32 @@ const login = async (req, res) => {
                 domain: `localhost`,
                 sameSite: 'lax',
             })
-            .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
+            .json({ company: { name, origin, branches, accounts, desc, profileImgUrl, companyImgUrl }, token });
+        }else{
+            // Compare the provided password with the hashed password in the database
+            const isPasswordCorrect = await user.comparePassword(password);
+            if (!isPasswordCorrect) {
+                return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid credentials' });
+            }
+            const firstName = user.firstName
+            const lastName = user.lastName
+            const username = user.username
+            const phoneNumber = user.phoneNumber
+    
+            // Generate a JWT token for the user
+            const token = user.createJWT();
+    
+            res
+                .status(StatusCodes.OK)
+                .cookie('token', token, {
+                    secure: true,
+                    httpOnly: true,
+                    maxAge: 8640000,
+                    domain: `localhost`,
+                    sameSite: 'lax',
+                })
+                .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
+        }
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }

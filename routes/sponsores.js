@@ -2,13 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    addToSponsoresList,
-    getSponsoresList,
-    deleteSponsor,
-    changeSponsorType
+    createSponsorsList,
+    getSponsorsList,
+    deleteSponsorsList,
 } = require('../controllers/sponsores')
 
-router.route('/').post(addToSponsoresList).get(getSponsoresList)
-router.route('/:id').post(changeSponsorType).delete(deleteSponsor)
+router.route('/').post(createSponsorsList).get(getSponsorsList).delete(deleteSponsorsList)
 
 module.exports = router
