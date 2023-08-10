@@ -6,12 +6,12 @@ const productSchema = new mongoose.Schema({
   manufacturerCompany: { type: String, required: true },
   price: { type: Number, required: true },
   priceOnSale: { type: Number },
-  rate: { type: Number },
-  numRating: { type: Number },
+  rate: { type: Number, default: 0 },
+  numRating: { type: Number, default: 0 },
   type: { type: String },
   guarantee: { type: String, default: 'No guarantee presented' },
   colors: { type: [String] },
-  imgUrl: { type: String },
+  imgUrls: { type: [String] },
   sizes: { type: [{ type: String, enum: ['S', 'M', 'L', 'XL', 'XXL'] }] },
 });
 
