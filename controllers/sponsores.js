@@ -1,7 +1,6 @@
 const {StatusCodes} = require('http-status-codes')
 const Sponsor = require('../models/sponsor')
 const Company = require('../models/company')
-const {BadRequestError, NotFoundError} = require('../errors')
 const { ObjectId } = require('mongoose').Types;
 
 const createSponsorsList = async (req, res) => {

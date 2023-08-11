@@ -4,7 +4,6 @@ const Company = require('../models/company')
 const { ObjectId } = require('mongoose').Types;
 const fs = require('fs')
 const path = require('path');
-const {BadRequestError, NotFoundError} = require('../errors')
 
 const createProduct = async (req, res) => {
     try {
@@ -74,14 +73,14 @@ const getAllProducts = async (req, res) => {
 
 const getProduct = async (req, res) => {
     try {
-        const { productId } = req.params;
+        const { productID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(productId)) {
+        if (!ObjectId.isValid(productID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid product ID' });
         }
 
-        const product = await Product.findById(productId).populate('relatedCompany', 'name origin branches accounts desc profileimgUrl companyimgUrl');
+        const product = await Product.findById(productID).populate('relatedCompany', 'name origin branches accounts desc profileimgUrl companyimgUrl');
 
         if (!product) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Product not found' });
@@ -95,7 +94,7 @@ const getProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
-        const { productId } = req.params;
+        const { productID } = req.params;
         const { name, manufacturerCompany, price, priceOnSale, type, guarantee, colors, sizes } = req.body;
         const productImages = req.files;
         const relatedCompany = req.company._id;
@@ -107,12 +106,12 @@ const updateProduct = async (req, res) => {
         }
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(productId)) {
+        if (!ObjectId.isValid(productID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid product ID' });
         }
 
         // Find the product by ID
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productID);
 
         // Check if the product exists
         if (!product) {
@@ -181,7 +180,7 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     try {
-        const { productId } = req.params;
+        const { productID } = req.params;
         const relatedCompany = req.company._id;
 
         // Check if the user is authenticated as a company
@@ -190,12 +189,12 @@ const deleteProduct = async (req, res) => {
         }
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(productId)) {
+        if (!ObjectId.isValid(productID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid product ID' });
         }
 
         // Find the product by ID
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productID);
 
         // Check if the product exists
         if (!product) {
@@ -209,7 +208,7 @@ const deleteProduct = async (req, res) => {
 
         // Delete the product and associated images
         for (const imagePath of product.imgUrl) {
-            fs.unlink(imageFullPath, (err) => {
+            fs.unlink(imagePath, (err) => {
                 if (err) {
                     console.error(`Error deleting image: ${err}`);
                 }
@@ -226,15 +225,15 @@ const deleteProduct = async (req, res) => {
 
 const getProductsByCompany = async (req, res) => {
     try {
-        const { companyId } = req.params;
+        const { companyID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(companyId)) {
+        if (!ObjectId.isValid(companyID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid company ID' });
         }
 
         // Find the company by ID
-        const company = await Company.findById(companyId);
+        const company = await Company.findById(companyID);
 
         // Check if the company exists
         if (!company) {
@@ -242,7 +241,7 @@ const getProductsByCompany = async (req, res) => {
         }
 
         // Find all products associated with the company
-        const products = await Product.find({ relatedCompany: companyId });
+        const products = await Product.find({ relatedCompany: companyID });
 
         res.status(StatusCodes.OK).json({ products });
     } catch (error) {
@@ -252,7 +251,7 @@ const getProductsByCompany = async (req, res) => {
 
 const rateProduct = async (req, res) => {
     try {
-        const { productId } = req.params;
+        const { productID } = req.params;
         const { rate } = req.body;
         
         if (req.company) {
@@ -264,12 +263,12 @@ const rateProduct = async (req, res) => {
         }
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(productId)) {
+        if (!ObjectId.isValid(productID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid product ID' });
         }
 
         // Find the product by ID
-        const product = await Product.findById(productId);
+        const product = await Product.findById(productID);
 
         // Check if the product exists
         if (!product) {

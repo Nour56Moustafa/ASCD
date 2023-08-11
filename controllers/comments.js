@@ -1,7 +1,6 @@
 const {StatusCodes} = require('http-status-codes')
 const Comment = require('../models/comment')
 const Blog = require('../models/blog');
-const {BadRequestError, NotFoundError} = require('../errors');
 const { now } = require('mongoose');
 const { ObjectId } = require('mongoose').Types;
 

@@ -1,5 +1,4 @@
 const {StatusCodes} = require('http-status-codes')
-const {BadRequestError, NotFoundError} = require('../errors')
 const User = require('../models/user');
 
 const searchUser = async (req, res) => {

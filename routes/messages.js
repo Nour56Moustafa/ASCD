@@ -12,6 +12,6 @@ const {
 router.route('/').post(createMessage)
 router.use(isAdmin)
 router.route('/').get(getAllMessages).delete(deleteAllMessages)
-router.route('/:messageId').delete(deleteMessage)
+router.route('/:messageID').delete(deleteMessage)
 
 module.exports = router

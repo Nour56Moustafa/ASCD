@@ -1,6 +1,5 @@
 const {StatusCodes} = require('http-status-codes')
 const Company = require('../models/company')
-const {BadRequestError, NotFoundError} = require('../errors')
 const { ObjectId } = require('mongoose').Types;
 const cookie = require('cookie');
 const fs = require('fs')
@@ -91,15 +90,15 @@ const getAllCompanies = async (req, res) => {
 
 const getCompany = async (req, res) => {
     try {
-        const companyId = req.params.id;
+        const { companyID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(companyId)) {
+        if (!ObjectId.isValid(companyID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid company ID' });
         }
 
         // Fetch the company by ID
-        const company = await Company.findById(companyId);
+        const company = await Company.findById(companyID);
 
         if (!company) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Company not found' });

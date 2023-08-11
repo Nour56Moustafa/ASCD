@@ -14,7 +14,7 @@ const {
 } = require('../controllers/products')
 
 router.route('/').post(authenticateCompany, createProduct).get(getAllProducts)
-router.route('/:id').post(authenticateUser, rateProduct).get(getProduct).delete(authenticateCompany, deleteProduct).patch(authenticateCompany, updateProduct)
-router.route('/:id/products').get(getProductsByCompany)
+router.route('/:productID').post(authenticateUser, rateProduct).get(getProduct).delete(authenticateCompany, deleteProduct).patch(authenticateCompany, updateProduct)
+router.route('/:companyID/products').get(getProductsByCompany)
 
 module.exports = router

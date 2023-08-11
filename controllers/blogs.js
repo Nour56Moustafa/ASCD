@@ -2,7 +2,6 @@ const { StatusCodes } = require('http-status-codes')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const { ObjectId } = require('mongoose').Types;
-const { BadRequestError, NotFoundError } = require('../errors')
 const fs = require('fs')
 const path = require('path');
 
@@ -56,14 +55,14 @@ const getAllBlogs = async(req, res) => {
 
 const getBlog = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { blogID } = req.params;
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(blogID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid blog ID' });
         }
 
         // Find the blog by ID in the database
-        const blog = await Blog.findById(id);
+        const blog = await Blog.findById(blogID);
         // If the blog is not found, return a 404 not found error
         if (!blog) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Blog not found' });
@@ -77,7 +76,7 @@ const getBlog = async(req, res) => {
 
 const updateBlog = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { blogID } = req.params;
         const { title, content, tags } = req.body;
         const image = req.files[0];
 
@@ -87,12 +86,12 @@ const updateBlog = async(req, res) => {
         }
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(blogID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid blog ID' });
         }
 
         // Find the blog by ID in the database
-        const blog = await Blog.findById(id);
+        const blog = await Blog.findById(blogID);
 
         if (!blog) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Blog not found' });
@@ -145,15 +144,15 @@ const updateBlog = async(req, res) => {
 
 const deleteBlog = async(req, res) => {
     try {
-        const { id } = req.params;
+        const { blogID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(blogID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid blog ID' });
         }
 
         // Find the blog by ID in the database
-        const blog = await Blog.findById(id);
+        const blog = await Blog.findById(blogID);
 
         // If the blog is not found, return a 404 not found error
         if (!blog) {
@@ -181,15 +180,15 @@ const deleteBlog = async(req, res) => {
 
 const manageLikes = async(req, res) => {
     try {
-        const blogId = req.params.id;
+        const { blogID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(blogId)) {
+        if (!ObjectId.isValid(blogID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid blog ID' });
         }
 
         // Find the blog by ID in the database
-        const blog = await Blog.findById(blogId);
+        const blog = await Blog.findById(blogID);
 
         // If the blog is not found, return a 404 not found error
         if (!blog) {
@@ -204,9 +203,9 @@ const manageLikes = async(req, res) => {
             return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Log in and try again' });
         }
 
-        if (user.likes.includes(blogId)) {
+        if (user.likes.includes(blogID)) {
             // Remove the blog's ID from the 'likes' array in the User model
-            const blogIndex = user.likes.indexOf(blogId);
+            const blogIndex = user.likes.indexOf(blogID);
             user.likes.splice(blogIndex, 1);
             await user.save();
 
@@ -216,7 +215,7 @@ const manageLikes = async(req, res) => {
             res.status(StatusCodes.OK).json({ message: 'Blog unliked successfully' });
         } else {
             // Add the blog's ID to the 'likes' array in the User model
-            user.likes.push(blogId);
+            user.likes.push(blogID);
             await user.save();
 
             // Increment likes count field in the Blog model by one

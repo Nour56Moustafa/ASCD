@@ -1,6 +1,5 @@
 const {StatusCodes} = require('http-status-codes')
 const Message = require('../models/message')
-const {BadRequestError, NotFoundError} = require('../errors')
 const { ObjectId } = require('mongoose').Types;
 
 const createMessage = async (req, res) => {
@@ -36,12 +35,12 @@ const deleteAllMessages = async (req, res) => {
 
 const deleteMessage = async (req, res) => {
     try {
-        const { messageId } = req.params
-        if (!ObjectId.isValid(messageId)) {
+        const { messageID } = req.params
+        if (!ObjectId.isValid(messageID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid message ID' });
         }
         
-        const message = await Message.findById( messageId );
+        const message = await Message.findById( messageID );
         
         // If the message is not found, return a 404 not found error
         if (!message) {

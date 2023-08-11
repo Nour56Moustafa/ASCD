@@ -11,6 +11,6 @@ const {
 } = require('../controllers/companies')
 
 router.route('/').post(createCompany).get(getAllCompanies).delete(authenticateCompany, deleteCompany).patch(authenticateCompany, updateCompany)
-router.route('/:id').get(getCompany)
+router.route('/:companyID').get(getCompany)
 
 module.exports = router
