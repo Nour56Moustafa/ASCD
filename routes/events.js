@@ -14,8 +14,8 @@ const {
 } = require('../controllers/events')
 
 router.route('/').post(authenticateUser, isAdmin, createEvent).get(getAllEvents)
-router.route('/:eventID').post(authenticateUser, bookForEvent).get(getEvent).delete(authenticateUser, isAdmin, deleteEvent).patch(authenticateUser, isAdmin, updateEvent)
-router.route('/:userID/events').get(authenticateUser, getEventsByUserId)
+router.route('/reservations').get(authenticateUser, getEventsByUserId)
+router.route('/:eventID').post(authenticateUser, bookForEvent).get(getEvent).delete(authenticateUser, isAdmin, deleteEvent).patch( updateEvent)
 
 module.exports = router
 

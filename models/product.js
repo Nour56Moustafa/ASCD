@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   priceOnSale: { type: Number },
   rate: { type: Number, default: 0 },
+  ratedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   numRating: { type: Number, default: 0 },
   type: { type: String },
   guarantee: { type: String, default: 'No guarantee presented' },

@@ -106,7 +106,9 @@ const updateBlog = async(req, res) => {
         // Update the blog fields
         blog.title = title || blog.title;
         blog.content = content || blog.content;
-        blog.tags = tags.split(',').map(tag => tag.trim()) || blog.tags;
+        if(tags){
+            blog.tags = tags.split(',').map(tag => tag.trim())
+        }
 
         // Update the image if provided
         if (image) {

@@ -40,7 +40,7 @@ const upload = multer({
       fileSize: 1024 * 1024 * 5, // 5 MB
     },
 });
-app.use(upload.array('images', 2))
+app.use(upload.array('images', 4))
 
 
 

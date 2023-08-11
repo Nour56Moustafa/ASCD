@@ -14,10 +14,10 @@ router.get('/search', searchUser);
 // Routes requiring authentication
 router.use(authenticateUser); // Use the middleware for all routes below
 
-// Protected routes
+// Protected routes, Requires authentication
 router.route('/')
-  .get(getUserProfile)   // Requires authentication
-  .delete(deleteUser)   // Requires authentication
-  .patch(updateUserProfile);   // Requires authentication
+  .get(getUserProfile)
+  .delete(deleteUser)
+  .patch(updateUserProfile);
 
 module.exports = router;

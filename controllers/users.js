@@ -11,7 +11,7 @@ const searchUser = async (req, res) => {
     }
 
     // Find users in the database matching the provided username (case-insensitive search)
-    const users = await User.find({ username: { $regex: new RegExp(username, 'i') } });
+    const users = await User.find({ username: { $regex: new RegExp(username, 'i') } }).select('_id firstName lastName username phoneNumber');
 
     // Return the search results
     res.status(StatusCodes.OK).json({ users });

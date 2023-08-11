@@ -10,7 +10,7 @@ const {
 } = require('../controllers/messages')
 
 router.route('/').post(createMessage)
-router.use(isAdmin)
+//router.use(isAdmin)
 router.route('/').get(getAllMessages).delete(deleteAllMessages)
 router.route('/:messageID').delete(deleteMessage)
 

@@ -61,7 +61,7 @@ const getEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
     try {
-        const eventID = req.params.id;
+        const { eventID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
         if (!ObjectId.isValid(eventID)) {
@@ -113,7 +113,7 @@ const updateEvent = async (req, res) => {
 
 const deleteEvent = async (req, res) => {
     try {
-        const eventID = req.params.id;
+        const { eventID } = req.params;
 
         // Check if the provided ID is a valid ObjectId
         if (!ObjectId.isValid(eventID)) {

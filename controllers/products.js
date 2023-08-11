@@ -8,7 +8,9 @@ const path = require('path');
 const createProduct = async (req, res) => {
     try {
         const { name, manufacturerCompany, price, priceOnSale, type, guarantee, colors, sizes } = req.body;
+
         const productImages = req.files
+
         const relatedCompany = req.company._id
         const flag = false
         // Check if the user is authenticated as a company
@@ -30,12 +32,8 @@ const createProduct = async (req, res) => {
 
             const uniqueFilename = Date.now() + '-' + productImage.originalname;
             const imagePath = path.join(imageFolder, uniqueFilename);
-
-            fs.rename(productImage.path, imagePath, (err) => {
-                if(err){
-                    throw err
-                }
-            }); // Move the uploaded file to the 'images' folder with the unique filename
+            await fs.rename(productImage.path, imagePath, (err) => {}); // Move the uploaded file to the 'images' folder with the unique filename
+            productImage.path = imagePath
         }
         const pathsArray = productImages.map(image => image.path);
         
@@ -153,6 +151,7 @@ const updateProduct = async (req, res) => {
                         throw err;
                     }
                 }); // Move the uploaded file to the 'images' folder with the unique filename
+                productImage.path = imagePath
             }
         }
         const pathsArray = productImages.map(image => image.path);
@@ -174,6 +173,7 @@ const updateProduct = async (req, res) => {
             res.status(StatusCodes.OK).json({ message: 'Product updated successfully', product });
         }
     } catch (error) {
+        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 }
@@ -205,9 +205,8 @@ const deleteProduct = async (req, res) => {
         if (!product.relatedCompany.equals(relatedCompany)) {
             return res.status(StatusCodes.FORBIDDEN).json({ error: 'You are not authorized to delete this product' });
         }
-
         // Delete the product and associated images
-        for (const imagePath of product.imgUrl) {
+        for (const imagePath of product.imgUrls) {
             fs.unlink(imagePath, (err) => {
                 if (err) {
                     console.error(`Error deleting image: ${err}`);
@@ -253,12 +252,13 @@ const rateProduct = async (req, res) => {
     try {
         const { productID } = req.params;
         const { rate } = req.body;
+        const userId = req.user.id;
         
         if (req.company) {
             return res.status(StatusCodes.FORBIDDEN).json({ error: 'A company can not rate products' });
         }
 
-        if (!req.user) {
+        if (!userId) {
             return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Please sign in to rate products' });
         }
 
@@ -275,19 +275,25 @@ const rateProduct = async (req, res) => {
             return res.status(StatusCodes.NOT_FOUND).json({ error: 'Product not found' });
         }
 
+        if (product.ratedBy.includes(userId)) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: 'You have already rated this product' });
+        }
+
         // Update the product's numRating and rate fields
         const newNumRating = product.numRating + 1;
         const newTotalRate = product.rate * product.numRating + rate;
         const newAverageRate = newTotalRate / newNumRating;
-
+        
+        product.ratedBy.push(userId)
         product.numRating = newNumRating;
         product.rate = newAverageRate;
 
         // Save the updated product
         await product.save();
 
-        res.status(StatusCodes.OK).json({ message: 'Product rated successfully', product });
+        res.status(StatusCodes.OK).json({ message: 'Product rated successfully'});
     } catch (error) {
+        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 };
