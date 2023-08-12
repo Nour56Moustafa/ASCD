@@ -80,9 +80,20 @@ const createCompany = async (req, res) => {
 const getAllCompanies = async (req, res) => {
     try {
         // Get approved companies
-        const approvedCompanies = await Company.find({ approved: false });
+        const approvedCompanies = await Company.find({ approved: true });
 
         res.status(StatusCodes.OK).json({ companies: approvedCompanies });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
+    }
+}
+
+const getUnapprovedCompanies = async (req, res) => {
+    try {
+        // Get unapproved companies
+        const unapprovedCompanies = await Company.find({ approved: false });
+
+        res.status(StatusCodes.OK).json({ companies: unapprovedCompanies });
     } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
@@ -238,12 +249,12 @@ const approveCompany = async (req, res) => {
         const { companyID } = req.params;
         
         // Check if the provided ID is a valid ObjectId
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(companyID)) {
             return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid company ID' });
         }
         
         // Find company in the database
-        const company = await Company.findById(id)
+        const company = await Company.findById(companyID)
 
         // If the company is not found, return a 404 not found error
         if (!company) {
@@ -268,5 +279,6 @@ module.exports = {
     getCompany,
     updateCompany,
     deleteCompany,
-    approveCompany
+    approveCompany,
+    getUnapprovedCompanies
 }

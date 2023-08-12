@@ -16,7 +16,7 @@ const {
 
 router.route('/').post(authenticateUser, isAdmin, createEvent).get(getAllEvents).delete(authenticateUser, isAdmin, deleteAllEvents)
 router.route('/reservations').get(authenticateUser, getEventsByUserId)
-router.route('/:eventID').post(authenticateUser, bookForEvent).get(getEvent).delete(authenticateUser, isAdmin, deleteEvent).patch( updateEvent)
+router.route('/:eventID').post(authenticateUser, bookForEvent).get(getEvent).delete(authenticateUser, isAdmin, deleteEvent).patch(updateEvent)
 
 module.exports = router
 

@@ -25,7 +25,7 @@ const auth = async (req, res, next) => {
         }
 
         // adding this {user} object in the request, because we will need it in
-        // the next middleware, and we need the id
+        // the next middleware
         next()
     } catch (error) {
         throw new UnauthenticatedError('User Unauthenticated')
