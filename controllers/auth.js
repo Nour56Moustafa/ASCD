@@ -44,6 +44,7 @@ const register = async(req, res) => {
             })
             .json({ user: { firstName, lastName, email, username, phoneNumber }, token });
     } catch (error) {
+        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 };

@@ -207,6 +207,16 @@ const getEventsByUserId = async (req, res) => {
     }
 }
 
+const deleteAllEvents = async (req, res) => {
+    try {
+        const result = await Event.deleteMany({});
+        const deletedCount = result.deletedCount
+        res.status(StatusCodes.OK).json({ message: 'Events deleted successfully', deletedCount });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
+    }
+}
+
 
 module.exports = {
     createEvent,
@@ -215,5 +225,6 @@ module.exports = {
     updateEvent,
     deleteEvent,
     getEventsByUserId,
-    bookForEvent
+    bookForEvent,
+    deleteAllEvents
 }

@@ -10,10 +10,11 @@ const {
     updateEvent,
     deleteEvent,
     getEventsByUserId,
-    bookForEvent
+    bookForEvent,
+    deleteAllEvents
 } = require('../controllers/events')
 
-router.route('/').post(authenticateUser, isAdmin, createEvent).get(getAllEvents)
+router.route('/').post(authenticateUser, isAdmin, createEvent).get(getAllEvents).delete(authenticateUser, isAdmin, deleteAllEvents)
 router.route('/reservations').get(authenticateUser, getEventsByUserId)
 router.route('/:eventID').post(authenticateUser, bookForEvent).get(getEvent).delete(authenticateUser, isAdmin, deleteEvent).patch( updateEvent)
 

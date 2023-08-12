@@ -114,14 +114,12 @@ const deleteComment = async (req, res) => {
 
     // Check if the user ID from the token matches the comment's userID
     const tokenUserId = req.user.id;
-    if (comment.userID.toString() !== tokenUserId) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'You are not authorized to delete this comment' });
+    if (comment.userID.toString() === tokenUserId || req.user.role == 'admin') {
+      // Delete the comment from the database
+      await comment.remove();
+      res.status(StatusCodes.OK).json({ message: 'Comment deleted successfully' });
     }
-
-    // Delete the comment from the database
-    await comment.remove();
-
-    res.status(StatusCodes.OK).json({ message: 'Comment deleted successfully' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'You are not authorized to delete this comment' });
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong.' });
   }

@@ -66,6 +66,8 @@ const commentsRouter = require('./routes/comments')
 const eventsRouter = require('./routes/events')
 const messagesRouter = require('./routes/messages')
 const sponsoresRouter = require('./routes/sponsores')
+const statisticsRouter = require('./routes/statistics')
+
 
 // error handlers
 const notFoundMiddleware = require('./middleware/not-found');
@@ -94,6 +96,8 @@ app.use('/api/v1/comments', commentsRouter)
 app.use('/api/v1/events', eventsRouter)
 app.use('/api/v1/messages', messagesRouter)
 app.use('/api/v1/sponsors', sponsoresRouter)
+app.use('/api/v1/statistics', statisticsRouter)
+
 
 // use basic middlewares
 app.use(notFoundMiddleware);

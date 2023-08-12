@@ -13,4 +13,3 @@ router.route('/:blogId').post(authenticateUser, createComment).get(getAllComment
 router.route('/:commentId').delete(authenticateUser, deleteComment).patch(authenticateUser, updateComment)
 
 module.exports = router
-
