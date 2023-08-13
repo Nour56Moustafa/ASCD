@@ -61,12 +61,14 @@ const authRouter = require('./routes/auth')
 const usersRouter = require('./routes/users')
 const blogsRouter = require('./routes/blogs')
 const productsRouter = require('./routes/products')
+const productCartRouter = require('./routes/productCart')
 const companiesRouter = require('./routes/companies')
 const commentsRouter = require('./routes/comments')
 const eventsRouter = require('./routes/events')
 const messagesRouter = require('./routes/messages')
 const sponsoresRouter = require('./routes/sponsores')
 const statisticsRouter = require('./routes/statistics')
+const wishlistRouter = require('./routes/wishlist')
 
 
 // error handlers
@@ -97,6 +99,9 @@ app.use('/api/v1/events', eventsRouter)
 app.use('/api/v1/messages', messagesRouter)
 app.use('/api/v1/sponsors', sponsoresRouter)
 app.use('/api/v1/statistics', statisticsRouter)
+app.use('/api/v1/cart', productCartRouter)
+app.use('/api/v1/wishlist', wishlistRouter)
+
 
 
 // use basic middlewares

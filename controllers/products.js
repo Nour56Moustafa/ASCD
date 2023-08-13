@@ -7,12 +7,13 @@ const path = require('path');
 
 const createProduct = async (req, res) => {
     try {
-        const { name, manufacturerCompany, price, priceOnSale, type, guarantee, colors, sizes } = req.body;
+        const { name, manufacturerCompany, price, priceOnSale, type, guarantee, sizes } = req.body;
 
         const productImages = req.files
 
         const relatedCompany = req.company._id
         const flag = false
+        
         // Check if the user is authenticated as a company
         if (!relatedCompany) {
             return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'You are not authorized to create a product' });
@@ -47,7 +48,6 @@ const createProduct = async (req, res) => {
                 priceOnSale,
                 type,
                 guarantee,
-                colors: colors.split(',').map(color => color.trim()),
                 sizes: sizes.split(',').map(size => size.trim()),
                 imgUrls: pathsArray,
             });
@@ -93,7 +93,7 @@ const getProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const { productID } = req.params;
-        const { name, manufacturerCompany, price, priceOnSale, type, guarantee, colors, sizes } = req.body;
+        const { name, manufacturerCompany, price, priceOnSale, type, guarantee, sizes } = req.body;
         const productImages = req.files;
         const relatedCompany = req.company._id;
         const flag = false;
@@ -164,7 +164,6 @@ const updateProduct = async (req, res) => {
             product.priceOnSale = priceOnSale || product.priceOnSale;
             product.type = type || product.type;
             product.guarantee = guarantee || product.guarantee;
-            product.colors = colors.split(',').map(color => color.trim()) || product.colors;
             product.sizes = sizes.split(',').map(size => size.trim()) || product.sizes;
             product.imgUrls = pathsArray || product.imgUrls;
 
@@ -173,7 +172,6 @@ const updateProduct = async (req, res) => {
             res.status(StatusCodes.OK).json({ message: 'Product updated successfully', product });
         }
     } catch (error) {
-        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 }
@@ -293,7 +291,6 @@ const rateProduct = async (req, res) => {
 
         res.status(StatusCodes.OK).json({ message: 'Product rated successfully'});
     } catch (error) {
-        console.log(error)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong' });
     }
 };

@@ -11,7 +11,6 @@ const productSchema = new mongoose.Schema({
   numRating: { type: Number, default: 0 },
   type: { type: String },
   guarantee: { type: String, default: 'No guarantee presented' },
-  colors: { type: [String] },
   imgUrls: { type: [String] },
   sizes: { type: [{ type: String, enum: ['S', 'M', 'L', 'XL', 'XXL'] }] },
 });
