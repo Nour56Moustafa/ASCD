@@ -15,7 +15,9 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-
+     <!-- API -->
+     <script src="../api/co-profile.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>company profile</title>
 </head>
 
@@ -68,6 +70,7 @@
         <div class="col-md-8 mx-auto">
             <!-- Profile widget -->
             <div class="bg-white shadow rounded overflow-hidden">
+            <div id="co-profile-widget">
                 <div class="px-4 pt-0 pb-4 cover">
                     <div class="media align-items-end profile-head">
                         <div class="profile mr-3">
@@ -123,6 +126,7 @@
 
                     </div>
                 </div>
+            </div>
                 <div class="py-4 px-4 ">
                     <div class="d-flex align-items-center justify-content-between mb-3 ">
                         <a href="../products/products.html " class="btn btn-link text-muted ">أظهر الكل</a>

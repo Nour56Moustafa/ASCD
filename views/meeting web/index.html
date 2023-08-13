@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- API -->
+    <script src="../api/shared-web-meeting.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="template-index belle template-index-belle">
@@ -892,7 +894,7 @@
                         <h2 class="h2" style="font-weight: bold; font-size: 25px;">شركاتنا المشاركة</h2>
                         <p style="font-size: 18px;">قم بتصفح منتجات هذه الشركات وعروضها</p>
                     </div>
-                    <div class="collection-grid">
+                    <div class="collection-grid" id="companies-row">
                         <div class="collection-grid-item">
                             <a href="../co-profile/company profile.html" class="collection-grid-item__link">
                                 <img data-src="assets/images/collection/photo_2023-04-12_03-28-49.jpg" src="assets/images/collection/photo_2023-04-12_03-28-49.jpg" alt="" class="blur-up lazyload" />
@@ -965,7 +967,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="articles-row" class="row">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="wrap-blog">
                                 <a href="" class="article__grid-image">
@@ -1035,7 +1037,7 @@
 
                         <!--End Testimonial Slider Title-->
                         <!--Testimonial Slider Items-->
-                        <div class="quotes-slider">
+                        <div class="quotes-slider" id="quotes-slider-wrapper">
                             <div class="quotes-slide">
                                 <div class="section-header text-center">
                                     <h1 class="h1">معالجة لبية</h1>
